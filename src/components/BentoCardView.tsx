@@ -64,9 +64,7 @@ const editorialCardThemes = [
 // sans and mono treatments so cards read as a considered editorial system, not repeats.
 const titleTypeStyles = [
   'font-editorial font-medium tracking-tight normal-case',
-  'font-primary font-bold tracking-tight uppercase',
   'font-gentium italic font-normal tracking-tight normal-case',
-  'font-mono font-bold tracking-wide uppercase',
 ];
 
 const eyebrowByType: Record<string, string> = {
