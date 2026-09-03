@@ -137,7 +137,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
               {card.content.metricValue || '98.4%'}
             </span>
             {card.content.metricChange && (
-              <span className="text-xs font-medium opacity-75">
+              <span className="text-xs font-medium opacity-75 font-[var(--font-editorial)]">
                 {card.content.metricChange}
               </span>
             )}
@@ -154,7 +154,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
         <div className="my-auto py-2 border-l border-current/40 pl-3.5 text-xs sm:text-sm font-medium font-[var(--font-editorial)]">
           "{card.content.quoteText || 'Weniger, aber besser.'}"
           {card.content.quoteAuthor && (
-              <span className="block mt-1 text-[11px] opacity-70 font-[var(--font-primary)]">
+              <span className="block mt-1 text-[11px] opacity-70 font-[var(--font-editorial)]">
               — {card.content.quoteAuthor}
             </span>
           )}

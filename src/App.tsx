@@ -27,6 +27,72 @@ import {
 
 const CARD_COUNTS = [2, 3, 4, 5, 6, 7, 8, 9];
 
+const ALICE_CARD_CONTENT = [
+  {
+    title: 'A la orilla del río',
+    subtitle: 'Alicia empezaba ya a cansarse de estar sentada con su hermana a la orilla del río, sin tener nada que hacer.',
+    badge: 'Alicia',
+  },
+  {
+    title: 'El libro de su hermana',
+    subtitle: 'Había echado un par de ojeadas al libro que su hermana estaba leyendo, pero no tenía ilustraciones ni diálogos.',
+    badge: 'La tarde',
+  },
+  {
+    title: 'La pregunta de Alicia',
+    subtitle: 'Alicia pensó que un libro sin ilustraciones ni diálogos no servía de mucho.',
+    badge: 'Curiosidad',
+  },
+  {
+    title: 'Un libro sin ilustraciones',
+    subtitle: '«¿Y de qué sirve un libro —pensó Alicia— sin ilustraciones ni diálogos?»',
+    badge: 'Maravillas',
+  },
+  {
+    title: 'Sin tener nada que hacer',
+    subtitle: 'El calor del día y el silencio de la orilla hicieron que Alicia empezara a sentirse muy cansada.',
+    badge: 'El río',
+  },
+  {
+    title: 'La hermana de Alicia',
+    subtitle: 'La hermana continuaba leyendo su libro, aunque aquellas páginas no despertaban la imaginación de Alicia.',
+    badge: 'Lectura',
+  },
+];
+
+const withAliceContent = (distribution: LayoutDistribution): LayoutDistribution => ({
+  ...distribution,
+  cards: distribution.cards.map((card, index) => {
+    const story = ALICE_CARD_CONTENT[index % ALICE_CARD_CONTENT.length];
+    const listItems = [
+      'Alicia miraba el libro de su hermana',
+      'No había ilustraciones en sus páginas',
+      'Tampoco había diálogos que leer',
+    ];
+
+    return {
+      ...card,
+      title: story.title,
+      content: {
+        ...card.content,
+        title: story.title,
+        subtitle: story.subtitle,
+        description: story.subtitle,
+        badge: story.badge,
+        metricValue: index % 2 === 0 ? '¿Y de qué sirve?' : 'Sin diálogo',
+        metricLabel: 'Un libro sin ilustraciones ni diálogos',
+        metricChange: 'Alicia pensó',
+        quoteText: '¿Y de qué sirve un libro sin ilustraciones ni diálogos?',
+        quoteAuthor: 'Alicia',
+        listItems,
+        trackTitle: 'La tarde junto al río',
+        trackArtist: 'Alicia',
+        actionText: 'Seguir leyendo',
+      },
+    };
+  }),
+});
+
 export default function App() {
   const [cardCount, setCardCount] = useState<number>(4);
   const [deviceView, setDeviceView] = useState<DeviceView>('desktop');
@@ -97,6 +163,11 @@ export default function App() {
     }
     return generateRandomBentoDistribution(cardCount);
   }, [allDistributions, currentIndex, cardCount]);
+
+  const displayedDistribution = useMemo(
+    () => withAliceContent(currentDistribution),
+    [currentDistribution]
+  );
 
   // Handle Card Count Change
   const handleCountChange = (count: number) => {
@@ -185,7 +256,7 @@ export default function App() {
     mobile: 'w-full max-w-[390px]',
   }[deviceView];
 
-  const selectedCard = currentDistribution.cards.find((c) => c.id === selectedCardId);
+  const selectedCard = displayedDistribution.cards.find((c) => c.id === selectedCardId);
 
   return (
     <div className="min-h-screen bg-[#ECEBE6] text-[#111111] dark:bg-[#121212] dark:text-[#EAEAEA] transition-colors duration-200 antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-900 flex flex-col justify-between">
@@ -412,7 +483,7 @@ export default function App() {
               >
                 <Layers className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white shrink-0 transition-colors" />
                 <span className="font-semibold text-neutral-800 dark:text-neutral-200 truncate max-w-[200px] sm:max-w-xs md:max-w-md group-hover:text-neutral-950 dark:group-hover:text-white">
-                  {currentDistribution.name}
+                  {displayedDistribution.name}
                 </span>
                 <ChevronDown
                   className={`w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-200 transition-transform duration-150 shrink-0 ${
@@ -492,9 +563,9 @@ export default function App() {
               className="grid grid-cols-12 auto-rows-min transition-all duration-200"
               style={{ gap: `${gap}px` }}
             >
-              {currentDistribution.cards.map((card, idx) => (
+              {displayedDistribution.cards.map((card, idx) => (
                 <BentoCardView
-                  key={`${currentDistribution.id}-${card.id}-${idx}`}
+                  key={`${displayedDistribution.id}-${card.id}-${idx}`}
                   card={card}
                   index={idx}
                   deviceView={deviceView}
