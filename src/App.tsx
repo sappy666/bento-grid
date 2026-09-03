@@ -27,70 +27,78 @@ import {
 
 const CARD_COUNTS = [2, 3, 4, 5, 6, 7, 8, 9];
 
-// Dialogue lines only — no speaker attribution, per the user's request to drop who says what.
-const DIALOGUE_LINES = [
-  '¿Podrías decirme, por favor, qué camino tengo que tomar para salir de aquí?',
-  'Esto depende en gran parte del sitio al que quieras llegar.',
-  'No me importa mucho el sitio…',
-  'Entonces tampoco importa mucho el camino que tomes.',
-  'Creo que estás loco.',
-  'De remate. Pero te diré un secreto: las mejores personas lo están.',
-  'No quiero andar entre locos.',
-  'Eso es inevitable. Aquí todos estamos locos. Yo estoy loco. Tú estás loca.',
-  '¿Cómo sabes que yo estoy loca?',
-  'Tienes que estarlo, o no habrías venido aquí.',
-  'El tiempo es un bien muy preciado.',
-  'Ah, no le agradas al tiempo, ¿verdad? Si fueras amigable con él, haría con el reloj lo que tú quisieras.',
+// Long-form vignettes: shown on cards with room for a full paragraph (title = headline,
+// subtitle = body). `badge` is the scene name — supplementary (modal + code export only).
+const PRIMARY_CONTENT = [
+  {
+    badge: 'El gato de Cheshire',
+    title: 'Depende de a dónde quieras ir',
+    subtitle: '—¿Podrías decirme, por favor, qué camino tengo que tomar para salir de aquí? —Eso depende en gran parte a dónde quieras ir.',
+  },
+  {
+    badge: 'Un secreto a voces',
+    title: 'Siempre se llega a alguna parte',
+    subtitle: '—¡Oh, siempre llegarás a alguna parte —dijo el Gato—, si caminas lo suficiente!',
+  },
+  {
+    badge: 'Tiempo sin tiempo',
+    title: 'Llego tarde a una cita importante',
+    subtitle: '¡Ay, Dios mío! ¡Ay, Dios mío! ¡Qué tarde se me está haciendo! No hay tiempo para decir hola o adiós, ¡llego tarde!',
+  },
 ];
 
-// Shorter lines only — sized to read well as a giant metric value, not wrap into a paragraph.
-const SHORT_DIALOGUE_LINES = [
-  DIALOGUE_LINES[2],
-  DIALOGUE_LINES[4],
-  DIALOGUE_LINES[6],
-  DIALOGUE_LINES[8],
-  DIALOGUE_LINES[10],
-];
-
-const ALICE_CARD_CONTENT = [
-  { title: 'El camino y el destino', subtitle: DIALOGUE_LINES[0], badge: 'Camino' },
-  { title: 'El camino y el destino', subtitle: DIALOGUE_LINES[1], badge: 'Destino' },
-  { title: 'El camino y el destino', subtitle: DIALOGUE_LINES[2], badge: 'Camino' },
-  { title: 'El camino y el destino', subtitle: DIALOGUE_LINES[3], badge: 'Destino' },
-  { title: 'La locura', subtitle: DIALOGUE_LINES[4], badge: 'Locura' },
-  { title: 'La locura', subtitle: DIALOGUE_LINES[5], badge: 'Locura' },
-  { title: 'Estar loco', subtitle: DIALOGUE_LINES[6], badge: 'Cordura' },
-  { title: 'Estar loco', subtitle: DIALOGUE_LINES[7], badge: 'Cordura' },
-  { title: 'Estar loco', subtitle: DIALOGUE_LINES[8], badge: 'Cordura' },
-  { title: 'Estar loco', subtitle: DIALOGUE_LINES[9], badge: 'Cordura' },
-  { title: 'El tiempo', subtitle: DIALOGUE_LINES[10], badge: 'Tiempo' },
-  { title: 'El tiempo', subtitle: DIALOGUE_LINES[11], badge: 'Tiempo' },
+// Short, punchy lines for compact metric/quote cards: `headline` fills the big display
+// slot (metric value or quote text), `caption` is the small uppercase line underneath.
+const SECONDARY_CONTENT = [
+  { badge: 'El Sombrerero Loco', headline: 'Las mejores personas lo están.', caption: 'EL SOMBRERERO Y ALICIA' },
+  { badge: 'El consejo del Absolem', headline: '¿Quién eres tú en realidad?', caption: 'LA ORUGA AZUL' },
+  { badge: 'La Reina de Corazones', headline: '¡Que le corten la cabeza!', caption: 'REGLA DE LA CORONA' },
+  { badge: 'Cuestión de tamaño', headline: 'A veces he creído seis cosas imposibles.', caption: 'ANTES DEL DESAYUNO' },
+  { badge: 'Juicios y razones', headline: 'Aquí todos estamos locos.', caption: 'EL GATO DE CHESHIRE' },
+  { badge: 'Un día cualquiera', headline: 'Es inútil volver a ayer.', caption: 'PUES ERA OTRA PERSONA' },
 ];
 
 const withAliceContent = (distribution: LayoutDistribution): LayoutDistribution => ({
   ...distribution,
   cards: distribution.cards.map((card, index) => {
-    const story = ALICE_CARD_CONTENT[index % ALICE_CARD_CONTENT.length];
+    // Metric/quote cards render a big value + small caption — that's exactly the
+    // punchy secondary shape. Everything else (featured/list/...) gets the long form.
+    if (card.type === 'metric' || card.type === 'quote') {
+      const s = SECONDARY_CONTENT[index % SECONDARY_CONTENT.length];
+      return {
+        ...card,
+        title: s.badge,
+        content: {
+          ...card.content,
+          title: s.badge,
+          badge: s.badge,
+          subtitle: undefined,
+          metricValue: s.headline,
+          metricLabel: s.caption,
+          metricChange: undefined,
+          quoteText: s.headline,
+          quoteAuthor: s.caption,
+        },
+      };
+    }
+
+    const p = PRIMARY_CONTENT[index % PRIMARY_CONTENT.length];
     const listItems = [0, 1, 2].map((offset) => ({
-      text: DIALOGUE_LINES[(index + offset) % DIALOGUE_LINES.length],
+      text: SECONDARY_CONTENT[(index + offset) % SECONDARY_CONTENT.length].headline,
       done: true,
     }));
 
     return {
       ...card,
-      title: story.title,
+      title: p.title,
       content: {
         ...card.content,
-        title: story.title,
-        subtitle: story.subtitle,
-        description: story.subtitle,
-        badge: story.badge,
-        metricValue: SHORT_DIALOGUE_LINES[index % SHORT_DIALOGUE_LINES.length],
-        metricLabel: story.title,
+        title: p.title,
+        badge: p.badge,
+        subtitle: p.subtitle,
+        description: p.subtitle,
         listItems,
-        quoteText: DIALOGUE_LINES[(index + 3) % DIALOGUE_LINES.length],
-        quoteAuthor: undefined,
-        trackTitle: story.title,
+        trackTitle: p.badge,
         trackArtist: undefined,
         actionText: 'Seguir leyendo',
       },
