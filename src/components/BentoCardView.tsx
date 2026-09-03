@@ -53,6 +53,13 @@ const getRowSpanClass = (span: number): string => {
   return span === 2 ? 'md:row-span-2 min-h-[360px]' : 'md:row-span-1 min-h-[220px] sm:min-h-[250px]';
 };
 
+const editorialCardThemes = [
+  'bg-[#E9DCCB] dark:bg-[#4A3029] border-[#B28C70] dark:border-[#795448] text-[#3B2521] dark:text-[#F4E8D8]',
+  'bg-[#F1E8D9] dark:bg-[#513A31] border-[#C6A98E] dark:border-[#846256] text-[#3B2521] dark:text-[#F4E8D8]',
+  'bg-[#6B2737] dark:bg-[#572332] border-[#6B2737] dark:border-[#854255] text-[#FFF4E6] dark:text-[#F9E6D2]',
+  'bg-[#D7B89C] dark:bg-[#432A27] border-[#A87562] dark:border-[#71453E] text-[#3B2521] dark:text-[#F4E8D8]',
+];
+
 export const BentoCardView: React.FC<BentoCardViewProps> = ({
   card,
   index,
@@ -71,6 +78,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       : getDesktopColSpanClass(card.colSpanDesktop);
 
   const rowClass = deviceView === 'mobile' ? 'min-h-[190px]' : getRowSpanClass(card.rowSpanDesktop);
+  const editorialTheme = editorialCardThemes[index % editorialCardThemes.length];
 
   const isWide = (deviceView === 'desktop' && card.colSpanDesktop >= 6) || (deviceView === 'tablet' && (card.colSpanTablet || 6) >= 8);
 
@@ -95,14 +103,14 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       style={{
         borderRadius: borderRadius !== undefined ? `${borderRadius}px` : undefined,
       }}
-      className={`group relative flex flex-col justify-between p-6 sm:p-7 transition-all duration-200 cursor-pointer select-none bg-white dark:bg-[#1C1C1E] border border-black/[0.04] dark:border-white/[0.06] hover:border-black/10 dark:hover:border-white/15 ${colClass} ${rowClass} ${
+      className={`group relative flex flex-col justify-between p-6 sm:p-7 transition-all duration-200 cursor-pointer select-none border hover:shadow-lg ${editorialTheme} ${colClass} ${rowClass} ${
         isSelected ? 'ring-2 ring-neutral-900 dark:ring-white' : ''
       }`}
     >
       {/* Minimal Header: title + short subtitle, no icon / badge / index chrome */}
       <div>
         <h3
-          className={`font-semibold tracking-tight text-neutral-900 dark:text-white leading-snug ${
+            className={`font-semibold tracking-tight leading-snug font-[var(--font-editorial)] ${
             isWide ? 'text-lg sm:text-xl mb-1.5' : 'text-sm sm:text-base mb-1'
           }`}
         >
@@ -112,7 +120,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
         {/* Subtitle / Description if not metric */}
         {card.type !== 'metric' && card.type !== 'quote' && (card.content.subtitle || card.content.quoteText) && (
           <p
-            className={`font-normal text-neutral-400 dark:text-neutral-500 leading-relaxed line-clamp-2 ${
+            className={`font-normal leading-relaxed line-clamp-2 font-[var(--font-editorial)] opacity-80 ${
               isWide ? 'text-xs sm:text-sm' : 'text-xs'
             }`}
           >
@@ -125,17 +133,17 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       {card.type === 'metric' && (
         <div className="my-auto py-2">
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl sm:text-4xl lg:text-5xl font-extralight tracking-tight text-neutral-900 dark:text-white">
+            <span className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight font-[var(--font-editorial)]">
               {card.content.metricValue || '98.4%'}
             </span>
             {card.content.metricChange && (
-              <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+              <span className="text-xs font-medium opacity-75">
                 {card.content.metricChange}
               </span>
             )}
           </div>
           {card.content.metricLabel && (
-            <div className="text-xs text-neutral-400 mt-1">
+            <div className="text-xs mt-1 opacity-75 font-[var(--font-editorial)]">
               {card.content.metricLabel}
             </div>
           )}
@@ -143,10 +151,10 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       )}
 
       {card.type === 'quote' && (
-        <div className="my-auto py-2 border-l border-neutral-300 dark:border-neutral-700 pl-3.5 text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-300">
+        <div className="my-auto py-2 border-l border-current/40 pl-3.5 text-xs sm:text-sm font-medium font-[var(--font-editorial)]">
           "{card.content.quoteText || 'Weniger, aber besser.'}"
           {card.content.quoteAuthor && (
-            <span className="block mt-1 text-[11px] text-neutral-400">
+              <span className="block mt-1 text-[11px] opacity-70 font-[var(--font-primary)]">
               — {card.content.quoteAuthor}
             </span>
           )}
@@ -156,8 +164,8 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       {card.type === 'list' && card.content.listItems && card.content.listItems.length > 0 && (
         <div className="my-auto py-2 space-y-2">
           {card.content.listItems.slice(0, 3).map((item, i) => (
-            <div key={i} className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
-              <div className="w-1 h-1 rounded-full bg-neutral-400 dark:bg-neutral-500 shrink-0" />
+            <div key={i} className="flex items-center gap-2 text-xs opacity-80 font-[var(--font-editorial)]">
+              <div className="w-1 h-1 rounded-full bg-current/60 shrink-0" />
               <span className="truncate">{item.text}</span>
             </div>
           ))}
