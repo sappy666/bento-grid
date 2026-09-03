@@ -110,7 +110,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       {/* Minimal Header: title + short subtitle, no icon / badge / index chrome */}
       <div>
         <h3
-            className={`font-semibold tracking-tight leading-snug font-[var(--font-editorial)] ${
+            className={`font-semibold tracking-tight leading-snug font-editorial ${
             isWide ? 'text-lg sm:text-xl mb-1.5' : 'text-sm sm:text-base mb-1'
           }`}
         >
@@ -120,7 +120,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
         {/* Subtitle / Description if not metric */}
         {card.type !== 'metric' && card.type !== 'quote' && (card.content.subtitle || card.content.quoteText) && (
           <p
-            className={`font-normal leading-relaxed line-clamp-2 font-[var(--font-editorial)] opacity-80 ${
+            className={`font-normal leading-relaxed line-clamp-2 font-editorial opacity-80 ${
               isWide ? 'text-xs sm:text-sm' : 'text-xs'
             }`}
           >
@@ -133,17 +133,17 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       {card.type === 'metric' && (
         <div className="my-auto py-2">
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight font-[var(--font-editorial)]">
+            <span className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight font-editorial">
               {card.content.metricValue || '98.4%'}
             </span>
             {card.content.metricChange && (
-              <span className="text-xs font-medium opacity-75 font-[var(--font-editorial)]">
+              <span className="text-xs font-medium opacity-75 font-editorial">
                 {card.content.metricChange}
               </span>
             )}
           </div>
           {card.content.metricLabel && (
-            <div className="text-xs mt-1 opacity-75 font-[var(--font-editorial)]">
+            <div className="text-xs mt-1 opacity-75 font-editorial">
               {card.content.metricLabel}
             </div>
           )}
@@ -151,10 +151,10 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       )}
 
       {card.type === 'quote' && (
-        <div className="my-auto py-2 border-l border-current/40 pl-3.5 text-xs sm:text-sm font-medium font-[var(--font-editorial)]">
+        <div className="my-auto py-2 border-l border-current/40 pl-3.5 text-xs sm:text-sm font-medium font-editorial">
           "{card.content.quoteText || 'Weniger, aber besser.'}"
           {card.content.quoteAuthor && (
-              <span className="block mt-1 text-[11px] opacity-70 font-[var(--font-editorial)]">
+              <span className="block mt-1 text-[11px] opacity-70 font-editorial">
               — {card.content.quoteAuthor}
             </span>
           )}
@@ -164,7 +164,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       {card.type === 'list' && card.content.listItems && card.content.listItems.length > 0 && (
         <div className="my-auto py-2 space-y-2">
           {card.content.listItems.slice(0, 3).map((item, i) => (
-            <div key={i} className="flex items-center gap-2 text-xs opacity-80 font-[var(--font-editorial)]">
+            <div key={i} className="flex items-center gap-2 text-xs opacity-80 font-editorial">
               <div className="w-1 h-1 rounded-full bg-current/60 shrink-0" />
               <span className="truncate">{item.text}</span>
             </div>
