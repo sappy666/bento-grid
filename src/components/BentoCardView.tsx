@@ -54,10 +54,10 @@ const getRowSpanClass = (span: number): string => {
 };
 
 const editorialCardThemes = [
-  'bg-[#E9DCCB] dark:bg-[#4A3029] border-[#B28C70] dark:border-[#795448] text-[#3B2521] dark:text-[#F4E8D8]',
-  'bg-[#F1E8D9] dark:bg-[#513A31] border-[#C6A98E] dark:border-[#846256] text-[#3B2521] dark:text-[#F4E8D8]',
-  'bg-[#6B2737] dark:bg-[#572332] border-[#6B2737] dark:border-[#854255] text-[#FFF4E6] dark:text-[#F9E6D2]',
-  'bg-[#D7B89C] dark:bg-[#432A27] border-[#A87562] dark:border-[#71453E] text-[#3B2521] dark:text-[#F4E8D8]',
+  'bg-[#FCD8E6] dark:bg-[#3A222D] border-black dark:border-[#FCD8E6]/40 text-black dark:text-[#FCD8E6]',
+  'bg-[#F4EFE8] dark:bg-[#221F1B] border-black dark:border-[#F4EFE8]/40 text-black dark:text-[#F4EFE8]',
+  'bg-black dark:bg-black border-black dark:border-white/40 text-white',
+  'bg-[#FCD8E6] dark:bg-[#3A222D] border-black dark:border-[#FCD8E6]/40 text-black dark:text-[#FCD8E6]',
 ];
 
 // A distinct typographic "voice" paired with each color theme above — mixes serif,

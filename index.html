@@ -12,9 +12,67 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Eczar:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      #app-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        background: #FCD8E6;
+        color: #000;
+      }
+      #app-loader .loader-mark {
+        position: relative;
+        width: 46px;
+        height: 46px;
+        border: 1.5px solid #000;
+      }
+      #app-loader .loader-mark::before,
+      #app-loader .loader-mark::after {
+        content: "";
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: #000;
+        top: -2px;
+      }
+      #app-loader .loader-mark::before { left: -2px; }
+      #app-loader .loader-mark::after { right: -2px; }
+      #app-loader .loader-dot {
+        position: absolute;
+        inset: 8px;
+        border-radius: 50%;
+        background: #000;
+        animation: app-loader-pulse 1.1s ease-in-out infinite;
+      }
+      #app-loader .loader-label {
+        font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        opacity: 0.7;
+      }
+      @keyframes app-loader-pulse {
+        0%, 100% { transform: scale(0.4); opacity: 0.35; }
+        50% { transform: scale(1); opacity: 1; }
+      }
+    </style>
   </head>
   <body class="h-full antialiased bg-[#ECEBE6] text-[#111111] dark:bg-[#121212] dark:text-[#EAEAEA] selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-900">
-    <div id="root" class="h-full"></div>
+    <div id="root" class="h-full">
+      <div id="app-loader">
+        <div class="loader-mark">
+          <span class="loader-dot"></span>
+        </div>
+        <span class="loader-label">Cargando</span>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
