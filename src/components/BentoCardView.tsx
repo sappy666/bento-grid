@@ -53,6 +53,27 @@ const getRowSpanClass = (span: number): string => {
   return span === 2 ? 'md:row-span-2 min-h-[360px]' : 'md:row-span-1 min-h-[220px] sm:min-h-[250px]';
 };
 
+// Mobile: break the flat single-column stack into a mosaic — compact card types pair up
+// two-per-row while wide/tall/text-heavy cards keep the full row, echoing the desktop rhythm.
+const getMobileColSpanClass = (card: BentoCard): string => {
+  const isCompact = card.type === 'metric' || card.type === 'quote' || (card.colSpanDesktop <= 4 && card.rowSpanDesktop === 1);
+  return isCompact ? 'col-span-6' : 'col-span-12';
+};
+
+const getMobileRowSpanClass = (card: BentoCard): string => {
+  if (card.rowSpanDesktop === 2) return 'min-h-[280px]';
+  switch (card.type) {
+    case 'metric':
+      return 'min-h-[160px]';
+    case 'quote':
+      return 'min-h-[180px]';
+    case 'list':
+      return 'min-h-[220px]';
+    default:
+      return 'min-h-[200px]';
+  }
+};
+
 const editorialCardThemes = [
   'bg-[#FCD8E6] dark:bg-[#3A222D] border-black dark:border-[#FCD8E6]/40 text-black dark:text-[#FCD8E6]',
   'bg-[#F4EFE8] dark:bg-[#221F1B] border-black dark:border-[#F4EFE8]/40 text-black dark:text-[#F4EFE8]',
@@ -60,8 +81,8 @@ const editorialCardThemes = [
   'bg-[#FCD8E6] dark:bg-[#3A222D] border-black dark:border-[#FCD8E6]/40 text-black dark:text-[#FCD8E6]',
 ];
 
-// A distinct typographic "voice" paired with each color theme above — mixes serif,
-// sans and mono treatments so cards read as a considered editorial system, not repeats.
+// Alternates two serif voices — Eczar (upright) and Gentium Basic (italic) — so
+// consecutive cards don't read as a single repeated typeface.
 const titleTypeStyles = [
   'font-editorial font-medium tracking-tight normal-case',
   'font-gentium italic font-normal tracking-tight normal-case',
@@ -89,17 +110,20 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
   // Device view span overrides
   const colClass =
     deviceView === 'mobile'
-      ? 'col-span-12'
+      ? getMobileColSpanClass(card)
       : deviceView === 'tablet'
       ? getTabletColSpanClass(card.colSpanTablet)
       : getDesktopColSpanClass(card.colSpanDesktop);
 
-  const rowClass = deviceView === 'mobile' ? 'min-h-[190px]' : getRowSpanClass(card.rowSpanDesktop);
+  const rowClass = deviceView === 'mobile' ? getMobileRowSpanClass(card) : getRowSpanClass(card.rowSpanDesktop);
   const editorialTheme = editorialCardThemes[index % editorialCardThemes.length];
   const titleType = titleTypeStyles[index % titleTypeStyles.length];
   const eyebrow = eyebrowByType[card.type] || 'Nota';
 
-  const isWide = (deviceView === 'desktop' && card.colSpanDesktop >= 6) || (deviceView === 'tablet' && (card.colSpanTablet || 6) >= 8);
+  const isWide =
+    (deviceView === 'desktop' && card.colSpanDesktop >= 6) ||
+    (deviceView === 'tablet' && (card.colSpanTablet || 6) >= 8) ||
+    (deviceView === 'mobile' && colClass === 'col-span-12');
 
   // Pure Empty Cards Mode (No information, clean geometric surfaces)
   if (isEmptyView) {
