@@ -1,5 +1,5 @@
 import React from 'react';
-import { Target, Search, GitFork, Sparkles, Palette, FileText } from 'lucide-react';
+import { Target, Search, GitFork, Palette, FileText } from 'lucide-react';
 
 interface StepIconProps {
   name: string;
@@ -15,7 +15,7 @@ export const StepIcon: React.FC<StepIconProps> = ({ name, className = 'w-5 h-5' 
     case 'flow':
       return <GitFork className={className} strokeWidth={1.8} />;
     case 'design':
-      return <Sparkles className={className} strokeWidth={1.8} />;
+      return <Palette className={className} strokeWidth={1.8} />;
     case 'ui':
       return <Palette className={className} strokeWidth={1.8} />;
     case 'presentation':

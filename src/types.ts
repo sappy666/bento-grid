@@ -63,6 +63,15 @@ export interface BentoLayoutPreset {
   cards: BentoCard[];
 }
 
+export interface LayoutDistribution {
+  id: string;
+  name: string;
+  description: string;
+  cardCount: number;
+  columnsDesktop: number;
+  cards: BentoCard[];
+}
+
 export type DeviceView = 'desktop' | 'tablet' | 'mobile';
 export type ViewMode = 'mockup' | 'wireframe';
 export type CornerRadius = 'rounded-none' | 'rounded-lg' | 'rounded-xl' | 'rounded-2xl';
