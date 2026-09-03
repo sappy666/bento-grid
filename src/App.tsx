@@ -259,7 +259,7 @@ export default function App() {
   const selectedCard = displayedDistribution.cards.find((c) => c.id === selectedCardId);
 
   return (
-    <div className="min-h-screen bg-[#ECEBE6] text-[#111111] dark:bg-[#121212] dark:text-[#EAEAEA] transition-colors duration-200 antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-900 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#ECEBE6] text-[#111111] dark:bg-[#121212] dark:text-[#EAEAEA] transition-colors duration-200 antialiased selection:bg-[#FCD8E6] selection:text-black dark:selection:bg-[#FCD8E6] dark:selection:text-black flex flex-col justify-between">
       {/* Toast Feedback */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-3.5 py-2 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-xl font-mono text-xs font-semibold">

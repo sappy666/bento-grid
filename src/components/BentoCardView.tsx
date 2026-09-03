@@ -65,7 +65,7 @@ const editorialCardThemes = [
 const titleTypeStyles = [
   'font-editorial font-medium tracking-tight normal-case',
   'font-primary font-bold tracking-tight uppercase',
-  'font-editorial font-semibold tracking-tighter normal-case',
+  'font-gentium italic font-normal tracking-tight normal-case',
   'font-mono font-bold tracking-wide uppercase',
 ];
 
@@ -183,7 +183,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       )}
 
       {card.type === 'quote' && (
-        <div className="my-auto py-2 border-l border-current/40 pl-3.5 text-xs sm:text-sm font-medium font-editorial italic">
+        <div className="my-auto py-2 border-l border-current/40 pl-3.5 text-xs sm:text-sm font-normal font-gentium italic">
           "{card.content.quoteText || 'Weniger, aber besser.'}"
           {card.content.quoteAuthor && (
               <span className="block mt-1.5 text-[10px] font-mono not-italic uppercase tracking-widest opacity-60">
