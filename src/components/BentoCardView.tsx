@@ -133,7 +133,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
         style={{
           borderRadius: borderRadius !== undefined ? `${borderRadius}px` : undefined,
         }}
-        className={`group relative transition-all duration-200 cursor-pointer select-none bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] hover:border-black/25 dark:hover:border-white/30 hover:shadow-md ${colClass} ${rowClass} ${
+        className={`group relative transition-all duration-200 cursor-pointer select-none border hover:shadow-md hover:opacity-90 ${editorialTheme} ${colClass} ${rowClass} ${
           isSelected ? 'ring-2 ring-neutral-900 dark:ring-white shadow-lg' : ''
         }`}
       />
