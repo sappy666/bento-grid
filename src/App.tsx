@@ -294,38 +294,38 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setDeviceView('desktop')}
-                  className={`p-1.5 rounded-full transition-colors ${
+                  className={`p-2.5 sm:p-1.5 rounded-full transition-colors ${
                     deviceView === 'desktop'
                       ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-xs'
                       : 'hover:text-neutral-900 dark:hover:text-white'
                   }`}
                   title="Desktop (12 cols)"
                 >
-                  <Monitor className="w-3.5 h-3.5" />
+                  <Monitor className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
                 </button>
                 <button
                   type="button"
                   onClick={() => setDeviceView('tablet')}
-                  className={`p-1.5 rounded-full transition-colors ${
+                  className={`p-2.5 sm:p-1.5 rounded-full transition-colors ${
                     deviceView === 'tablet'
                       ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-xs'
                       : 'hover:text-neutral-900 dark:hover:text-white'
                   }`}
                   title="Tablet (768px)"
                 >
-                  <Tablet className="w-3.5 h-3.5" />
+                  <Tablet className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
                 </button>
                 <button
                   type="button"
                   onClick={() => setDeviceView('mobile')}
-                  className={`p-1.5 rounded-full transition-colors ${
+                  className={`p-2.5 sm:p-1.5 rounded-full transition-colors ${
                     deviceView === 'mobile'
                       ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-xs'
                       : 'hover:text-neutral-900 dark:hover:text-white'
                   }`}
                   title="Móvil (390px)"
                 >
-                  <Smartphone className="w-3.5 h-3.5" />
+                  <Smartphone className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
                 </button>
               </div>
 
@@ -334,18 +334,18 @@ export default function App() {
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="p-1.5 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 transition-colors"
+                  className="p-2.5 sm:p-1.5 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 transition-colors"
                   title="Restablecer"
                 >
-                  <RotateCcw className="w-3.5 h-3.5" />
+                  <RotateCcw className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsDark(!isDark)}
-                  className="p-1.5 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 transition-colors"
+                  className="p-2.5 sm:p-1.5 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 transition-colors"
                   title={isDark ? 'Modo claro' : 'Modo oscuro'}
                 >
-                  {isDark ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+                  {isDark ? <Sun className="w-4 h-4 sm:w-3.5 sm:h-3.5" /> : <Moon className="w-4 h-4 sm:w-3.5 sm:h-3.5" />}
                 </button>
               </div>
             </div>
@@ -358,13 +358,13 @@ export default function App() {
           <div className="flex flex-wrap items-center justify-between gap-2.5 p-2 sm:p-2.5 rounded-2xl bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-sm border border-neutral-300/80 dark:border-neutral-800 shadow-xs">
             
             {/* 1. Card Count Selector (2 to 9) */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5 sm:gap-1">
               {CARD_COUNTS.map((count) => (
                 <button
                   key={count}
                   type="button"
                   onClick={() => handleCountChange(count)}
-                  className={`w-7 h-7 rounded-lg text-xs font-mono font-bold transition-all ${
+                  className={`w-9 h-9 sm:w-7 sm:h-7 rounded-lg text-xs font-mono font-bold transition-all ${
                     cardCount === count
                       ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-xs scale-105'
                       : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
@@ -383,7 +383,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setCardContentMode('content')}
-                  className={`p-1.5 rounded-lg transition-colors ${
+                  className={`p-2.5 sm:p-1.5 rounded-lg transition-colors ${
                     cardContentMode === 'content'
                       ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-xs'
                       : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
@@ -395,7 +395,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setCardContentMode('empty')}
-                  className={`p-1.5 rounded-lg transition-colors ${
+                  className={`p-2.5 sm:p-1.5 rounded-lg transition-colors ${
                     cardContentMode === 'empty'
                       ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-xs'
                       : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
@@ -410,7 +410,7 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setShowEqualizer(!showEqualizer)}
-                className={`p-1.5 rounded-xl border transition-all ${
+                className={`p-2.5 sm:p-1.5 rounded-xl border transition-all ${
                   showEqualizer
                     ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 border-neutral-900 dark:border-white shadow-xs'
                     : 'bg-neutral-100 dark:bg-neutral-800/80 border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
@@ -427,7 +427,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={handlePrevDistribution}
-                  className="p-1.5 rounded-lg text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 transition-colors"
+                  className="p-2.5 sm:p-1.5 rounded-lg text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 transition-colors"
                   title="Anterior"
                 >
                   <ChevronLeft className="w-4 h-4" />
@@ -440,7 +440,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={handleNextDistribution}
-                  className="p-1.5 rounded-lg text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 transition-colors"
+                  className="p-2.5 sm:p-1.5 rounded-lg text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 transition-colors"
                   title="Siguiente"
                 >
                   <ChevronRight className="w-4 h-4" />
@@ -451,7 +451,7 @@ export default function App() {
               <button
                 type="button"
                 onClick={handleRandomize}
-                className="p-2 rounded-xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 hover:opacity-90 transition-opacity shadow-xs"
+                className="p-2.5 sm:p-2 rounded-xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 hover:opacity-90 transition-opacity shadow-xs"
                 title="Randomizar"
               >
                 <Shuffle className="w-4 h-4" />
@@ -478,7 +478,7 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setShowStylesMenu(!showStylesMenu)}
-                className="flex items-center gap-1.5 py-1 px-2 -ml-2 rounded-lg hover:bg-neutral-200/70 dark:hover:bg-neutral-800 transition-colors cursor-pointer group text-left"
+                className="flex items-center gap-1.5 py-2 sm:py-1 px-2 -ml-2 rounded-lg hover:bg-neutral-200/70 dark:hover:bg-neutral-800 transition-colors cursor-pointer group text-left"
                 title="Explorar todos los estilos de distribución"
               >
                 <Layers className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white shrink-0 transition-colors" />
@@ -499,7 +499,7 @@ export default function App() {
                     className="fixed inset-0 z-40"
                     onClick={() => setShowStylesMenu(false)}
                   />
-                  <div className="absolute top-full left-0 mt-1.5 z-50 w-72 sm:w-84 max-h-72 overflow-y-auto p-1.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xl font-sans">
+                  <div className="absolute top-full left-0 mt-1.5 z-50 w-72 sm:w-84 max-w-[calc(100vw-2rem)] max-h-72 overflow-y-auto p-1.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xl font-sans">
                     <div className="px-2.5 py-1.5 text-[11px] font-mono font-medium text-neutral-400 dark:text-neutral-500 border-b border-neutral-100 dark:border-neutral-800 flex items-center justify-between">
                       <span>Estilos ({cardCount} tarjetas)</span>
                       <span>{allDistributions.length} disponibles</span>

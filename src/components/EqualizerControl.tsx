@@ -29,7 +29,7 @@ export const EqualizerControl: React.FC<EqualizerControlProps> = ({
         <button
           type="button"
           onClick={onReset}
-          className="p-1 rounded-md text-neutral-400 hover:text-neutral-800 dark:hover:text-[#FCD8E6] transition-colors"
+          className="p-2 sm:p-1 -m-1 rounded-md text-neutral-400 hover:text-neutral-800 dark:hover:text-[#FCD8E6] transition-colors"
           title="Restablecer valores originales (Radio: 20px, Gap: 16px)"
           aria-label="Restablecer ecualizador"
         >
@@ -47,7 +47,7 @@ export const EqualizerControl: React.FC<EqualizerControlProps> = ({
             </span>
           </div>
 
-          <div className="relative flex items-center py-1">
+          <div className="relative flex items-center py-2 sm:py-1">
             <input
               type="range"
               min="0"
@@ -55,7 +55,7 @@ export const EqualizerControl: React.FC<EqualizerControlProps> = ({
               step="2"
               value={borderRadius}
               onChange={(e) => onBorderRadiusChange(Number(e.target.value))}
-              className="w-full h-2 rounded-lg bg-neutral-200 dark:bg-[#2A1E26] appearance-none cursor-pointer accent-[#FCD8E6] focus:outline-none"
+              className="w-full h-2.5 sm:h-2 rounded-lg bg-neutral-200 dark:bg-[#2A1E26] appearance-none cursor-pointer accent-[#FCD8E6] focus:outline-none"
               aria-label="Ajustar radio de bordes"
             />
           </div>
@@ -67,7 +67,7 @@ export const EqualizerControl: React.FC<EqualizerControlProps> = ({
                 key={r}
                 type="button"
                 onClick={() => onBorderRadiusChange(r)}
-                className={`px-1.5 py-0.5 rounded hover:bg-neutral-200 dark:hover:bg-[#2A1E26] transition-colors ${
+                className={`px-2 py-1.5 sm:px-1.5 sm:py-0.5 rounded hover:bg-neutral-200 dark:hover:bg-[#2A1E26] transition-colors ${
                   borderRadius === r ? 'text-neutral-900 dark:text-[#FCD8E6] font-bold' : ''
                 }`}
               >
@@ -86,7 +86,7 @@ export const EqualizerControl: React.FC<EqualizerControlProps> = ({
             </span>
           </div>
 
-          <div className="relative flex items-center py-1">
+          <div className="relative flex items-center py-2 sm:py-1">
             <input
               type="range"
               min="0"
@@ -94,7 +94,7 @@ export const EqualizerControl: React.FC<EqualizerControlProps> = ({
               step="2"
               value={gap}
               onChange={(e) => onGapChange(Number(e.target.value))}
-              className="w-full h-2 rounded-lg bg-neutral-200 dark:bg-[#2A1E26] appearance-none cursor-pointer accent-[#FCD8E6] focus:outline-none"
+              className="w-full h-2.5 sm:h-2 rounded-lg bg-neutral-200 dark:bg-[#2A1E26] appearance-none cursor-pointer accent-[#FCD8E6] focus:outline-none"
               aria-label="Ajustar separación entre tarjetas"
             />
           </div>
@@ -106,7 +106,7 @@ export const EqualizerControl: React.FC<EqualizerControlProps> = ({
                 key={g}
                 type="button"
                 onClick={() => onGapChange(g)}
-                className={`px-1.5 py-0.5 rounded hover:bg-neutral-200 dark:hover:bg-[#2A1E26] transition-colors ${
+                className={`px-2 py-1.5 sm:px-1.5 sm:py-0.5 rounded hover:bg-neutral-200 dark:hover:bg-[#2A1E26] transition-colors ${
                   gap === g ? 'text-neutral-900 dark:text-[#FCD8E6] font-bold' : ''
                 }`}
               >
