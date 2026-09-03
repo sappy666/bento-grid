@@ -29,33 +29,37 @@ const CARD_COUNTS = [2, 3, 4, 5, 6, 7, 8, 9];
 
 // Long-form vignettes: shown on cards with room for a full paragraph (title = headline,
 // subtitle = body). `badge` is the scene name — supplementary (modal + code export only).
+// Ordered as a small arc: an inviting question, its payoff, then a change of scene.
 const PRIMARY_CONTENT = [
   {
     badge: 'El gato de Cheshire',
     title: 'Depende de a dónde quieras ir',
-    subtitle: '—¿Podrías decirme, por favor, qué camino tengo que tomar para salir de aquí? —Eso depende en gran parte a dónde quieras ir.',
+    subtitle: '—¿Podrías decirme qué camino debo tomar para salir de aquí? —Eso depende del lugar al que quieras llegar.',
   },
   {
     badge: 'Un secreto a voces',
     title: 'Siempre se llega a alguna parte',
-    subtitle: '—¡Oh, siempre llegarás a alguna parte —dijo el Gato—, si caminas lo suficiente!',
+    subtitle: '—Siempre llegarás a alguna parte —dijo el Gato—, si caminas lo suficiente.',
   },
   {
     badge: 'Tiempo sin tiempo',
     title: 'Llego tarde a una cita importante',
-    subtitle: '¡Ay, Dios mío! ¡Ay, Dios mío! ¡Qué tarde se me está haciendo! No hay tiempo para decir hola o adiós, ¡llego tarde!',
+    subtitle: '¡Dios mío, Dios mío, qué tarde se me está haciendo! No hay tiempo ni para decir hola: ¡llego tarde!',
   },
 ];
 
 // Short, punchy lines for compact metric/quote cards: `headline` fills the big display
-// slot (metric value or quote text), `caption` is the small uppercase line underneath.
+// slot (metric value or quote text) so it needs to stand on its own — no continuing
+// clauses parked in the caption. `caption` is a short context tag underneath.
+// Ordered as a small arc: a question of identity, two takes on madness, a dramatic
+// punchline, a whimsical aside, then a reflective close.
 const SECONDARY_CONTENT = [
-  { badge: 'El Sombrerero Loco', headline: 'Las mejores personas lo están.', caption: 'EL SOMBRERERO Y ALICIA' },
-  { badge: 'El consejo del Absolem', headline: '¿Quién eres tú en realidad?', caption: 'LA ORUGA AZUL' },
-  { badge: 'La Reina de Corazones', headline: '¡Que le corten la cabeza!', caption: 'REGLA DE LA CORONA' },
-  { badge: 'Cuestión de tamaño', headline: 'A veces he creído seis cosas imposibles.', caption: 'ANTES DEL DESAYUNO' },
-  { badge: 'Juicios y razones', headline: 'Aquí todos estamos locos.', caption: 'EL GATO DE CHESHIRE' },
-  { badge: 'Un día cualquiera', headline: 'Es inútil volver a ayer.', caption: 'PUES ERA OTRA PERSONA' },
+  { badge: 'La pregunta de la Oruga', headline: '¿Quién eres tú, en realidad?', caption: 'LA ORUGA AZUL' },
+  { badge: 'El Sombrerero Loco', headline: 'Las mejores personas siempre están un poco locas.', caption: 'EL SOMBRERERO Y ALICIA' },
+  { badge: 'La lógica de Wonderland', headline: 'Aquí todos estamos locos.', caption: 'EL GATO DE CHESHIRE' },
+  { badge: 'La Reina de Corazones', headline: '¡Que le corten la cabeza!', caption: 'SENTENCIA REAL' },
+  { badge: 'Cosas imposibles', headline: 'Seis cosas imposibles antes del desayuno.', caption: 'PENSAMIENTOS DE ALICIA' },
+  { badge: 'El día de ayer', headline: 'Es inútil volver a ayer.', caption: 'REFLEXIÓN DE ALICIA' },
 ];
 
 const withAliceContent = (distribution: LayoutDistribution): LayoutDistribution => ({
