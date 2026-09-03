@@ -20,12 +20,15 @@ import {
   FileText,
   SlidersHorizontal,
   ChevronDown,
+  Palette,
+  Linkedin,
+  Globe2,
 } from 'lucide-react';
 
 const CARD_COUNTS = [2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function App() {
-  const [cardCount, setCardCount] = useState<number>(6);
+  const [cardCount, setCardCount] = useState<number>(4);
   const [deviceView, setDeviceView] = useState<DeviceView>('desktop');
   const [cardContentMode, setCardContentMode] = useState<'content' | 'empty'>('empty');
   const [borderRadius, setBorderRadius] = useState<number>(20);
@@ -38,7 +41,7 @@ export default function App() {
   const [distributionIndexByCount, setDistributionIndexByCount] = useState<Record<number, number>>({
     2: 0,
     3: 0,
-    4: 0,
+    4: 8,
     5: 0,
     6: 0,
     7: 0,
@@ -162,11 +165,11 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handlePrevDistribution, handleNextDistribution]);
 
-  // Reset to default 6-card reference layout
+  // Reset to default 4-card reference layout
   const handleReset = () => {
-    setCardCount(6);
-    setDistributionIndexByCount((prev) => ({ ...prev, 6: 0 }));
-    setCustomDistributionsByCount((prev) => ({ ...prev, 6: [] }));
+    setCardCount(4);
+    setDistributionIndexByCount((prev) => ({ ...prev, 4: 8 }));
+    setCustomDistributionsByCount((prev) => ({ ...prev, 4: [] }));
     setDeviceView('desktop');
     setCardContentMode('empty');
     setSelectedCardId(null);
@@ -506,11 +509,48 @@ export default function App() {
         </main>
 
         {/* Minimal Footer */}
-        <footer className="mt-12 pt-6 border-t border-neutral-300/80 dark:border-neutral-800/80 flex items-center justify-between text-xs font-mono text-neutral-500">
-          <span>BENTO GRID STUDIO</span>
-          <span>
-            {cardCount} CARDS • {deviceView.toUpperCase()}
-          </span>
+        <footer className="mt-12 pt-6 border-t border-neutral-300/80 dark:border-neutral-800/80 flex flex-col gap-5 text-xs font-mono text-neutral-500 sm:flex-row sm:items-end sm:justify-between">
+          <div className="space-y-1">
+            <span className="block text-neutral-700 dark:text-neutral-300">BENTO GRID STUDIO</span>
+            <span className="block text-[11px] tracking-wide text-neutral-400 dark:text-neutral-500">
+              macarena ramdohr / sappy
+            </span>
+          </div>
+
+          <div className="flex flex-col items-start gap-3 sm:items-end">
+            <nav aria-label="Enlaces de Macarena Ramdohr" className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <a
+                href="https://www.behance.net/macarenaramdohr"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 transition-colors hover:text-neutral-900 dark:hover:text-white"
+              >
+                <Palette className="h-3.5 w-3.5" />
+                Behance
+              </a>
+              <a
+                href="https://www.linkedin.com/in/mramdohr/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 transition-colors hover:text-neutral-900 dark:hover:text-white"
+              >
+                <Linkedin className="h-3.5 w-3.5" />
+                LinkedIn
+              </a>
+              <a
+                href="https://portafolio-mramdohr.vercel.app/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 transition-colors hover:text-neutral-900 dark:hover:text-white"
+              >
+                <Globe2 className="h-3.5 w-3.5" />
+                Portafolio
+              </a>
+            </nav>
+            <span className="text-[11px] text-neutral-400 dark:text-neutral-500">
+              {cardCount} CARDS • {deviceView.toUpperCase()}
+            </span>
+          </div>
         </footer>
       </div>
 

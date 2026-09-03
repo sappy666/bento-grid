@@ -102,7 +102,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       {/* Minimal Header: title + short subtitle, no icon / badge / index chrome */}
       <div>
         <h3
-          className={`font-medium tracking-tight text-neutral-900 dark:text-white leading-snug ${
+          className={`font-semibold tracking-tight text-neutral-900 dark:text-white leading-snug ${
             isWide ? 'text-lg sm:text-xl mb-1.5' : 'text-sm sm:text-base mb-1'
           }`}
         >
@@ -112,7 +112,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
         {/* Subtitle / Description if not metric */}
         {card.type !== 'metric' && card.type !== 'quote' && (card.content.subtitle || card.content.quoteText) && (
           <p
-            className={`text-neutral-400 dark:text-neutral-500 leading-relaxed line-clamp-2 ${
+            className={`font-normal text-neutral-400 dark:text-neutral-500 leading-relaxed line-clamp-2 ${
               isWide ? 'text-xs sm:text-sm' : 'text-xs'
             }`}
           >
@@ -125,7 +125,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       {card.type === 'metric' && (
         <div className="my-auto py-2">
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-neutral-900 dark:text-white">
+            <span className="text-3xl sm:text-4xl lg:text-5xl font-extralight tracking-tight text-neutral-900 dark:text-white">
               {card.content.metricValue || '98.4%'}
             </span>
             {card.content.metricChange && (
@@ -143,7 +143,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       )}
 
       {card.type === 'quote' && (
-        <div className="my-auto py-2 border-l border-neutral-300 dark:border-neutral-700 pl-3.5 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300">
+        <div className="my-auto py-2 border-l border-neutral-300 dark:border-neutral-700 pl-3.5 text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-300">
           "{card.content.quoteText || 'Weniger, aber besser.'}"
           {card.content.quoteAuthor && (
             <span className="block mt-1 text-[11px] text-neutral-400">
