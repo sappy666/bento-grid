@@ -27,48 +27,54 @@ import {
 
 const CARD_COUNTS = [2, 3, 4, 5, 6, 7, 8, 9];
 
+// Dialogue lines only — no speaker attribution, per the user's request to drop who says what.
+const DIALOGUE_LINES = [
+  '¿Podrías decirme, por favor, qué camino tengo que tomar para salir de aquí?',
+  'Esto depende en gran parte del sitio al que quieras llegar.',
+  'No me importa mucho el sitio…',
+  'Entonces tampoco importa mucho el camino que tomes.',
+  'Creo que estás loco.',
+  'De remate. Pero te diré un secreto: las mejores personas lo están.',
+  'No quiero andar entre locos.',
+  'Eso es inevitable. Aquí todos estamos locos. Yo estoy loco. Tú estás loca.',
+  '¿Cómo sabes que yo estoy loca?',
+  'Tienes que estarlo, o no habrías venido aquí.',
+  'El tiempo es un bien muy preciado.',
+  'Ah, no le agradas al tiempo, ¿verdad? Si fueras amigable con él, haría con el reloj lo que tú quisieras.',
+];
+
+// Shorter lines only — sized to read well as a giant metric value, not wrap into a paragraph.
+const SHORT_DIALOGUE_LINES = [
+  DIALOGUE_LINES[2],
+  DIALOGUE_LINES[4],
+  DIALOGUE_LINES[6],
+  DIALOGUE_LINES[8],
+  DIALOGUE_LINES[10],
+];
+
 const ALICE_CARD_CONTENT = [
-  {
-    title: 'A la orilla del río',
-    subtitle: 'Alicia empezaba ya a cansarse de estar sentada con su hermana a la orilla del río, sin tener nada que hacer.',
-    badge: 'Alicia',
-  },
-  {
-    title: 'El libro de su hermana',
-    subtitle: 'Había echado un par de ojeadas al libro que su hermana estaba leyendo, pero no tenía ilustraciones ni diálogos.',
-    badge: 'La tarde',
-  },
-  {
-    title: 'La pregunta de Alicia',
-    subtitle: 'Alicia pensó que un libro sin ilustraciones ni diálogos no servía de mucho.',
-    badge: 'Curiosidad',
-  },
-  {
-    title: 'Un libro sin ilustraciones',
-    subtitle: '«¿Y de qué sirve un libro —pensó Alicia— sin ilustraciones ni diálogos?»',
-    badge: 'Maravillas',
-  },
-  {
-    title: 'Sin tener nada que hacer',
-    subtitle: 'El calor del día y el silencio de la orilla hicieron que Alicia empezara a sentirse muy cansada.',
-    badge: 'El río',
-  },
-  {
-    title: 'La hermana de Alicia',
-    subtitle: 'La hermana continuaba leyendo su libro, aunque aquellas páginas no despertaban la imaginación de Alicia.',
-    badge: 'Lectura',
-  },
+  { title: 'El camino y el destino', subtitle: DIALOGUE_LINES[0], badge: 'Camino' },
+  { title: 'El camino y el destino', subtitle: DIALOGUE_LINES[1], badge: 'Destino' },
+  { title: 'El camino y el destino', subtitle: DIALOGUE_LINES[2], badge: 'Camino' },
+  { title: 'El camino y el destino', subtitle: DIALOGUE_LINES[3], badge: 'Destino' },
+  { title: 'La locura', subtitle: DIALOGUE_LINES[4], badge: 'Locura' },
+  { title: 'La locura', subtitle: DIALOGUE_LINES[5], badge: 'Locura' },
+  { title: 'Estar loco', subtitle: DIALOGUE_LINES[6], badge: 'Cordura' },
+  { title: 'Estar loco', subtitle: DIALOGUE_LINES[7], badge: 'Cordura' },
+  { title: 'Estar loco', subtitle: DIALOGUE_LINES[8], badge: 'Cordura' },
+  { title: 'Estar loco', subtitle: DIALOGUE_LINES[9], badge: 'Cordura' },
+  { title: 'El tiempo', subtitle: DIALOGUE_LINES[10], badge: 'Tiempo' },
+  { title: 'El tiempo', subtitle: DIALOGUE_LINES[11], badge: 'Tiempo' },
 ];
 
 const withAliceContent = (distribution: LayoutDistribution): LayoutDistribution => ({
   ...distribution,
   cards: distribution.cards.map((card, index) => {
     const story = ALICE_CARD_CONTENT[index % ALICE_CARD_CONTENT.length];
-    const listItems = [
-      'Alicia miraba el libro de su hermana',
-      'No había ilustraciones en sus páginas',
-      'Tampoco había diálogos que leer',
-    ];
+    const listItems = [0, 1, 2].map((offset) => ({
+      text: DIALOGUE_LINES[(index + offset) % DIALOGUE_LINES.length],
+      done: true,
+    }));
 
     return {
       ...card,
@@ -79,14 +85,13 @@ const withAliceContent = (distribution: LayoutDistribution): LayoutDistribution 
         subtitle: story.subtitle,
         description: story.subtitle,
         badge: story.badge,
-        metricValue: index % 2 === 0 ? '¿Y de qué sirve?' : 'Sin diálogo',
-        metricLabel: 'Un libro sin ilustraciones ni diálogos',
-        metricChange: 'Alicia pensó',
-        quoteText: '¿Y de qué sirve un libro sin ilustraciones ni diálogos?',
-        quoteAuthor: 'Alicia',
+        metricValue: SHORT_DIALOGUE_LINES[index % SHORT_DIALOGUE_LINES.length],
+        metricLabel: story.title,
         listItems,
-        trackTitle: 'La tarde junto al río',
-        trackArtist: 'Alicia',
+        quoteText: DIALOGUE_LINES[(index + 3) % DIALOGUE_LINES.length],
+        quoteAuthor: undefined,
+        trackTitle: story.title,
+        trackArtist: undefined,
         actionText: 'Seguir leyendo',
       },
     };
