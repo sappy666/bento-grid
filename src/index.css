@@ -17,6 +17,10 @@
   .font-editorial {
     font-family: var(--font-editorial);
   }
+
+  .font-primary {
+    font-family: var(--font-primary);
+  }
 }
 
 /* Minimalist interaction resets */

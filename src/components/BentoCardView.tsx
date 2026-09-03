@@ -60,6 +60,25 @@ const editorialCardThemes = [
   'bg-[#D7B89C] dark:bg-[#432A27] border-[#A87562] dark:border-[#71453E] text-[#3B2521] dark:text-[#F4E8D8]',
 ];
 
+// A distinct typographic "voice" paired with each color theme above — mixes serif,
+// sans and mono treatments so cards read as a considered editorial system, not repeats.
+const titleTypeStyles = [
+  'font-editorial font-medium tracking-tight normal-case',
+  'font-primary font-bold tracking-tight uppercase',
+  'font-editorial font-semibold tracking-tighter normal-case',
+  'font-mono font-bold tracking-wide uppercase',
+];
+
+const eyebrowByType: Record<string, string> = {
+  featured: 'Destacado',
+  metric: 'Métrica',
+  list: 'Índice',
+  quote: 'Cita',
+  image: 'Visual',
+  media: 'Media',
+  action: 'Acción',
+};
+
 export const BentoCardView: React.FC<BentoCardViewProps> = ({
   card,
   index,
@@ -79,6 +98,8 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
 
   const rowClass = deviceView === 'mobile' ? 'min-h-[190px]' : getRowSpanClass(card.rowSpanDesktop);
   const editorialTheme = editorialCardThemes[index % editorialCardThemes.length];
+  const titleType = titleTypeStyles[index % titleTypeStyles.length];
+  const eyebrow = eyebrowByType[card.type] || 'Nota';
 
   const isWide = (deviceView === 'desktop' && card.colSpanDesktop >= 6) || (deviceView === 'tablet' && (card.colSpanTablet || 6) >= 8);
 
@@ -103,15 +124,26 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       style={{
         borderRadius: borderRadius !== undefined ? `${borderRadius}px` : undefined,
       }}
-      className={`group relative flex flex-col justify-between p-6 sm:p-7 transition-all duration-200 cursor-pointer select-none border hover:shadow-lg ${editorialTheme} ${colClass} ${rowClass} ${
+      className={`group relative flex flex-col justify-between p-5 sm:p-6 transition-all duration-200 cursor-pointer select-none border hover:shadow-lg ${editorialTheme} ${colClass} ${rowClass} ${
         isSelected ? 'ring-2 ring-neutral-900 dark:ring-white' : ''
       }`}
     >
-      {/* Minimal Header: title + short subtitle, no icon / badge / index chrome */}
+      {/* Eyebrow bar: corner marks + centered label + running index, editorial "spec sheet" framing */}
+      <div className="flex items-center justify-between gap-2 pb-2 mb-3 border-b border-current/15">
+        <span className="w-1 h-1 rounded-full bg-current/50 shrink-0" />
+        <span className="flex-1 text-center text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.25em] opacity-60 truncate">
+          {eyebrow}
+        </span>
+        <span className="text-[9px] sm:text-[10px] font-mono opacity-50 tabular-nums shrink-0">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+      </div>
+
+      {/* Header: title + short subtitle, typographic voice varies per card */}
       <div>
         <h3
-            className={`font-semibold tracking-tight leading-snug font-editorial ${
-            isWide ? 'text-lg sm:text-xl mb-1.5' : 'text-sm sm:text-base mb-1'
+            className={`leading-snug ${titleType} ${
+            isWide ? 'text-lg sm:text-2xl mb-1.5' : 'text-sm sm:text-base mb-1'
           }`}
         >
           {card.content.title || card.title}
@@ -120,7 +152,7 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
         {/* Subtitle / Description if not metric */}
         {card.type !== 'metric' && card.type !== 'quote' && (card.content.subtitle || card.content.quoteText) && (
           <p
-            className={`font-normal leading-relaxed line-clamp-2 font-editorial opacity-80 ${
+            className={`font-normal leading-relaxed line-clamp-2 font-primary opacity-75 ${
               isWide ? 'text-xs sm:text-sm' : 'text-xs'
             }`}
           >
@@ -133,17 +165,17 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       {card.type === 'metric' && (
         <div className="my-auto py-2">
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight font-editorial">
+            <span className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tighter font-editorial">
               {card.content.metricValue || '98.4%'}
             </span>
             {card.content.metricChange && (
-              <span className="text-xs font-medium opacity-75 font-editorial">
+              <span className="text-xs font-mono font-medium opacity-75">
                 {card.content.metricChange}
               </span>
             )}
           </div>
           {card.content.metricLabel && (
-            <div className="text-xs mt-1 opacity-75 font-editorial">
+            <div className="text-[10px] mt-1.5 font-mono uppercase tracking-widest opacity-60">
               {card.content.metricLabel}
             </div>
           )}
@@ -151,10 +183,10 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       )}
 
       {card.type === 'quote' && (
-        <div className="my-auto py-2 border-l border-current/40 pl-3.5 text-xs sm:text-sm font-medium font-editorial">
+        <div className="my-auto py-2 border-l border-current/40 pl-3.5 text-xs sm:text-sm font-medium font-editorial italic">
           "{card.content.quoteText || 'Weniger, aber besser.'}"
           {card.content.quoteAuthor && (
-              <span className="block mt-1 text-[11px] opacity-70 font-editorial">
+              <span className="block mt-1.5 text-[10px] font-mono not-italic uppercase tracking-widest opacity-60">
               — {card.content.quoteAuthor}
             </span>
           )}
@@ -164,8 +196,8 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       {card.type === 'list' && card.content.listItems && card.content.listItems.length > 0 && (
         <div className="my-auto py-2 space-y-2">
           {card.content.listItems.slice(0, 3).map((item, i) => (
-            <div key={i} className="flex items-center gap-2 text-xs opacity-80 font-editorial">
-              <div className="w-1 h-1 rounded-full bg-current/60 shrink-0" />
+            <div key={i} className="flex items-center gap-2.5 text-xs opacity-80 font-primary">
+              <span className="text-[9px] font-mono opacity-50 shrink-0">{String(i + 1).padStart(2, '0')}</span>
               <span className="truncate">{item.text}</span>
             </div>
           ))}
