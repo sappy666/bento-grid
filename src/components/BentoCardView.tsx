@@ -120,10 +120,11 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
   const titleType = titleTypeStyles[index % titleTypeStyles.length];
   const eyebrow = eyebrowByType[card.type] || 'Nota';
 
+  const isMobile = deviceView === 'mobile';
   const isWide =
     (deviceView === 'desktop' && card.colSpanDesktop >= 6) ||
     (deviceView === 'tablet' && (card.colSpanTablet || 6) >= 8) ||
-    (deviceView === 'mobile' && colClass === 'col-span-12');
+    (isMobile && colClass === 'col-span-12');
 
   // Pure Empty Cards Mode (No information, clean geometric surfaces)
   if (isEmptyView) {
@@ -154,11 +155,11 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
           dropped on narrow mobile cards where there isn't room for all three without crowding) */}
       <div className="flex items-center justify-between gap-2 pb-2 mb-3 border-b border-current/15">
         <span className="w-1 h-1 rounded-full bg-current/50 shrink-0" />
-        <span className="flex-1 min-w-0 text-center text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.25em] opacity-60 truncate">
+        <span className={`flex-1 min-w-0 text-center font-mono uppercase tracking-[0.25em] opacity-60 truncate ${isMobile ? 'text-[11px]' : 'text-[9px] sm:text-[10px]'}`}>
           {eyebrow}
         </span>
-        {(deviceView !== 'mobile' || isWide) && (
-          <span className="text-[9px] sm:text-[10px] font-mono opacity-50 tabular-nums shrink-0">
+        {(!isMobile || isWide) && (
+          <span className={`font-mono opacity-50 tabular-nums shrink-0 ${isMobile ? 'text-[11px]' : 'text-[9px] sm:text-[10px]'}`}>
             {String(index + 1).padStart(2, '0')}
           </span>
         )}
@@ -168,7 +169,9 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       <div>
         <h3
             className={`leading-snug ${titleType} ${
-            isWide ? 'text-lg sm:text-2xl mb-1.5' : 'text-sm sm:text-base mb-1'
+            isMobile
+              ? isWide ? 'text-2xl mb-2' : 'text-lg mb-1.5'
+              : isWide ? 'text-lg sm:text-2xl mb-1.5' : 'text-sm sm:text-base mb-1'
           }`}
         >
           {card.content.title || card.title}
@@ -178,7 +181,9 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
         {card.type !== 'metric' && card.type !== 'quote' && (card.content.subtitle || card.content.quoteText) && (
           <p
             className={`font-normal leading-relaxed line-clamp-2 font-primary opacity-75 ${
-              isWide ? 'text-xs sm:text-sm' : 'text-xs'
+              isMobile
+                ? isWide ? 'text-base' : 'text-sm'
+                : isWide ? 'text-xs sm:text-sm' : 'text-xs'
             }`}
           >
             {card.content.subtitle || card.content.quoteText}
@@ -192,19 +197,21 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 min-w-0">
             <span
               className={`font-medium tracking-tighter font-editorial break-words ${
-                isWide ? 'text-3xl sm:text-4xl lg:text-5xl' : 'text-xl sm:text-2xl'
+                isMobile
+                  ? isWide ? 'text-4xl' : 'text-3xl'
+                  : isWide ? 'text-3xl sm:text-4xl lg:text-5xl' : 'text-xl sm:text-2xl'
               }`}
             >
               {card.content.metricValue || '98.4%'}
             </span>
             {card.content.metricChange && (
-              <span className="text-xs font-mono font-medium opacity-75">
+              <span className={`font-mono font-medium opacity-75 ${isMobile ? 'text-sm' : 'text-xs'}`}>
                 {card.content.metricChange}
               </span>
             )}
           </div>
           {card.content.metricLabel && (
-            <div className="text-[10px] mt-1.5 font-mono uppercase tracking-widest opacity-60 line-clamp-1">
+            <div className={`mt-1.5 font-mono uppercase tracking-widest opacity-60 line-clamp-1 ${isMobile ? 'text-xs' : 'text-[10px]'}`}>
               {card.content.metricLabel}
             </div>
           )}
@@ -212,10 +219,10 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       )}
 
       {card.type === 'quote' && (
-        <div className="my-auto py-2 border-l border-current/40 pl-3.5 text-xs sm:text-sm font-normal font-gentium italic">
+        <div className={`my-auto py-2 border-l border-current/40 pl-3.5 font-normal font-gentium italic ${isMobile ? 'text-base' : 'text-xs sm:text-sm'}`}>
           "{card.content.quoteText || 'Weniger, aber besser.'}"
           {card.content.quoteAuthor && (
-              <span className="block mt-1.5 text-[10px] font-mono not-italic uppercase tracking-widest opacity-60">
+              <span className={`block mt-1.5 font-mono not-italic uppercase tracking-widest opacity-60 ${isMobile ? 'text-xs' : 'text-[10px]'}`}>
               — {card.content.quoteAuthor}
             </span>
           )}
@@ -225,8 +232,8 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       {card.type === 'list' && card.content.listItems && card.content.listItems.length > 0 && (
         <div className="my-auto py-2 space-y-2">
           {card.content.listItems.slice(0, 3).map((item, i) => (
-            <div key={i} className="flex items-center gap-2.5 text-xs opacity-80 font-primary min-w-0">
-              <span className="text-[9px] font-mono opacity-50 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+            <div key={i} className={`flex items-center gap-2.5 opacity-80 font-primary min-w-0 ${isMobile ? 'text-sm' : 'text-xs'}`}>
+              <span className={`font-mono opacity-50 shrink-0 ${isMobile ? 'text-[10px]' : 'text-[9px]'}`}>{String(i + 1).padStart(2, '0')}</span>
               <span className="min-w-0 truncate">{item.text}</span>
             </div>
           ))}
