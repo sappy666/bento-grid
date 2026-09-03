@@ -168,10 +168,10 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       {/* Header: title + short subtitle, typographic voice varies per card */}
       <div>
         <h3
-            className={`leading-snug ${titleType} ${
+            className={`leading-[1.05] ${titleType} ${
             isMobile
-              ? isWide ? 'text-2xl mb-2' : 'text-lg mb-1.5'
-              : isWide ? 'text-lg sm:text-2xl mb-1.5' : 'text-sm sm:text-base mb-1'
+              ? isWide ? 'text-4xl mb-2.5' : 'text-2xl mb-2'
+              : isWide ? 'text-3xl sm:text-4xl md:text-5xl mb-2.5' : 'text-xl sm:text-2xl mb-1.5'
           }`}
         >
           {card.content.title || card.title}
@@ -182,8 +182,8 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
           <p
             className={`font-normal leading-relaxed line-clamp-2 font-primary opacity-75 ${
               isMobile
-                ? isWide ? 'text-base' : 'text-sm'
-                : isWide ? 'text-xs sm:text-sm' : 'text-xs'
+                ? isWide ? 'text-lg' : 'text-base'
+                : isWide ? 'text-sm sm:text-base' : 'text-sm'
             }`}
           >
             {card.content.subtitle || card.content.quoteText}
@@ -198,20 +198,20 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
             <span
               className={`font-medium tracking-tighter font-editorial break-words ${
                 isMobile
-                  ? isWide ? 'text-4xl' : 'text-3xl'
-                  : isWide ? 'text-3xl sm:text-4xl lg:text-5xl' : 'text-xl sm:text-2xl'
+                  ? isWide ? 'text-6xl' : 'text-4xl'
+                  : isWide ? 'text-5xl sm:text-6xl lg:text-7xl' : 'text-3xl sm:text-4xl'
               }`}
             >
               {card.content.metricValue || '98.4%'}
             </span>
             {card.content.metricChange && (
-              <span className={`font-mono font-medium opacity-75 ${isMobile ? 'text-sm' : 'text-xs'}`}>
+              <span className={`font-mono font-medium opacity-75 ${isMobile ? 'text-base' : 'text-sm'}`}>
                 {card.content.metricChange}
               </span>
             )}
           </div>
           {card.content.metricLabel && (
-            <div className={`mt-1.5 font-mono uppercase tracking-widest opacity-60 line-clamp-1 ${isMobile ? 'text-xs' : 'text-[10px]'}`}>
+            <div className={`mt-2 font-mono uppercase tracking-widest opacity-60 line-clamp-1 ${isMobile ? 'text-sm' : 'text-xs'}`}>
               {card.content.metricLabel}
             </div>
           )}
@@ -219,10 +219,10 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       )}
 
       {card.type === 'quote' && (
-        <div className={`my-auto py-2 border-l border-current/40 pl-3.5 font-normal font-gentium italic ${isMobile ? 'text-base' : 'text-xs sm:text-sm'}`}>
+        <div className={`my-auto py-2 border-l-2 border-current/40 pl-4 font-normal font-gentium italic leading-snug ${isMobile ? 'text-2xl' : 'text-lg sm:text-xl'}`}>
           "{card.content.quoteText || 'Weniger, aber besser.'}"
           {card.content.quoteAuthor && (
-              <span className={`block mt-1.5 font-mono not-italic uppercase tracking-widest opacity-60 ${isMobile ? 'text-xs' : 'text-[10px]'}`}>
+              <span className={`block mt-2 font-mono not-italic uppercase tracking-widest opacity-60 ${isMobile ? 'text-sm' : 'text-xs'}`}>
               — {card.content.quoteAuthor}
             </span>
           )}
@@ -230,10 +230,10 @@ export const BentoCardView: React.FC<BentoCardViewProps> = ({
       )}
 
       {card.type === 'list' && card.content.listItems && card.content.listItems.length > 0 && (
-        <div className="my-auto py-2 space-y-2">
+        <div className="my-auto py-2 space-y-2.5">
           {card.content.listItems.slice(0, 3).map((item, i) => (
-            <div key={i} className={`flex items-center gap-2.5 opacity-80 font-primary min-w-0 ${isMobile ? 'text-sm' : 'text-xs'}`}>
-              <span className={`font-mono opacity-50 shrink-0 ${isMobile ? 'text-[10px]' : 'text-[9px]'}`}>{String(i + 1).padStart(2, '0')}</span>
+            <div key={i} className={`flex items-center gap-3 opacity-80 font-primary min-w-0 ${isMobile ? 'text-lg' : 'text-base'}`}>
+              <span className={`font-mono opacity-50 shrink-0 ${isMobile ? 'text-xs' : 'text-[11px]'}`}>{String(i + 1).padStart(2, '0')}</span>
               <span className="min-w-0 truncate">{item.text}</span>
             </div>
           ))}
