@@ -30,7 +30,7 @@ const CARD_COUNTS = [2, 3, 4, 5, 6, 7, 8, 9];
 export default function App() {
   const [cardCount, setCardCount] = useState<number>(4);
   const [deviceView, setDeviceView] = useState<DeviceView>('desktop');
-  const [cardContentMode, setCardContentMode] = useState<'content' | 'empty'>('empty');
+  const [cardContentMode, setCardContentMode] = useState<'content' | 'empty'>('content');
   const [borderRadius, setBorderRadius] = useState<number>(20);
   const [gap, setGap] = useState<number>(16);
   const [showEqualizer, setShowEqualizer] = useState<boolean>(false);
@@ -41,7 +41,7 @@ export default function App() {
   const [distributionIndexByCount, setDistributionIndexByCount] = useState<Record<number, number>>({
     2: 0,
     3: 0,
-    4: 8,
+    4: 2,
     5: 0,
     6: 0,
     7: 0,
@@ -168,10 +168,10 @@ export default function App() {
   // Reset to default 4-card reference layout
   const handleReset = () => {
     setCardCount(4);
-    setDistributionIndexByCount((prev) => ({ ...prev, 4: 8 }));
+    setDistributionIndexByCount((prev) => ({ ...prev, 4: 2 }));
     setCustomDistributionsByCount((prev) => ({ ...prev, 4: [] }));
     setDeviceView('desktop');
-    setCardContentMode('empty');
+    setCardContentMode('content');
     setSelectedCardId(null);
     setBorderRadius(20);
     setGap(16);
