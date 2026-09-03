@@ -1,0 +1,6 @@
+{
+  "name": "Bento Grid Studio",
+  "description": "Retícula Bento minimalista y flujo de proceso de diseño (Design Process) basado en diseño editorial suizo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
